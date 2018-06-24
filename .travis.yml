@@ -5,6 +5,7 @@ jdk:
 before_install:
 - openssl aes-256-cbc -K $encrypted_ea884ee24f00_key -iv $encrypted_ea884ee24f00_iv -in secrets.tar.enc -out secrets.tar -d
 - tar xvf secrets.tar
+- ls
 - gpg --import private.key
 deploy:
   provider: script
