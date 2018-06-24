@@ -3,8 +3,8 @@ jdk:
 - oraclejdk8
 - openjdk8
 before_install:
-- openssl aes-256-cbc -K $encrypted_ea884ee24f00_key -iv $encrypted_ea884ee24f00_iv -in private.key.enc -out private.key -d
-- openssl aes-256-cbc -K $encrypted_ea884ee24f00_key -iv $encrypted_ea884ee24f00_iv -in .travis.settings-security.xml.enc -out .travis.settings-security.xml -d
+- openssl aes-256-cbc -K $encrypted_ea884ee24f00_key -iv $encrypted_ea884ee24f00_iv -in secrets.tar.enc -out secrets.tar -d
+- tar xvf secrets.tar
 - gpg --import private.key
 deploy:
   provider: script
@@ -12,7 +12,3 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
-env:
-  global:
-  - secure: hdMqyvTzzbeOGM+otG+OwCIR+4EFbwDzICLN9JpbLPsmPs0ZVRIH3nh8kP5n2CJxKzoKK98fM7tO6suF1LCbu5QmQx7l1aZIuuR53vSbWOwjaefKTZ3spneaXErb1ggNuiSuXCl/hn7pAxLB1zJkR7PBi5Ry/eOaqcSkJ2RKQH5J8tw4hhmulHpxRuxIB69q2k8hpSO5wcAtkhW/h6NDaliywb53pm9vyrxmHYCaWIH7aL8F1byYXbqDDsnAb+HYydXVWs+1cN/PA2eOKFAqJrE0jtIJJXO6m15HrGotoeOWeRUlMe6LMgyEwA8LtQrlurxS/RFGuSR7f9tlwOjf1RH2fp37lt79OZmZKWeH2hU6X06tTrL1mE+V0hWV0tnFu6oPuFpxkuSdDrjBkUWUbsr3PPWuoENXg+VltpPp4+6sJBSz/j49LItJrvmmzybaMY5LQX7WqjJuBp/9iUPp2Ds3iJOeEbA9kc4hE945kQZHlpWU/1ceHuCqR5tMpUpbUVsaOKeIb5vn5Bbmn4j9pT6huSBTcmtI8rS15MlAz2yfDcrZa/sHYwD3StpCHf7gH94XLjGBaupx4xDJbDPHP9jG5A/NBMt8KlBi8Ax6eQW3gf+Y2L9zM8U8pUDWEv46TbSCNvMiQLOEnmZYn8xNUKhWaP3hA7wvTrrV55ZcrO4=
-  - secure: d31v1LA+qSf5V2nPCmppfTZvoIY7kExrUxMFd7t6jPnsFwFk6qUQ7NlvqtqyZ+gf40h2LHvf/KNqifBjZgB3IpIaAocxQnyBHQAkSxwht2KsHvyPn8jLHEsJ0GIBE2oCZBD0qDdDZPtjjE7OdkhMi3hySXnJw8N4N4QRgJaMXce+3OKlLTWQQcM2m5fLvo7aOh0jTUEjBwV4AStwMlbJv3SYltKFDXHT4f4qhh1i/XkT8UFlBzvnA5TChb/zdwAa4v0LlDZMl4LQekW16KOQJvmxNeCN3agSa20STzeH0QW3PTStJAuDVVyrNCftTUMYEfoeBcTRiWqXotQncQSwiQNt3hKZNSFqWRNibVCcGo8KlpVkgJ1a4GC5ktZXtuH4P8uosLH/nwwrmALBhrY/p+/SGxYNHsVT98XW9irOWixOv/zIQ9mJiwdOp8ErXMaC9RHzLztd3WjxrCO5xNKoKWJrn1ZrKjtkEOSw0GHs3MrmsgiSqdKb4jagdeSsTW+loUyVINRNqkMg1DK60jK+kJKYCfmeKcvbyYelGkA/bdDuvtrqrPRccYnV1p4LfRizQCKEVFqQFTxH5i5dsFxElD7+68ycImiFpZSpdsz+uxpVB3MY5iRSz99eQzSEeXu9QMzCsdfC/8RwfYlx6Lxg0hNbdrlgawMg709+KGTflg8=
