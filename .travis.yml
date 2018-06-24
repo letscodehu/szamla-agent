@@ -4,11 +4,11 @@ jdk:
 - openjdk8
 before_install:
 - openssl aes-256-cbc -K $encrypted_ea884ee24f00_key -iv $encrypted_ea884ee24f00_iv -in private.key.enc -out private.key -d
+- openssl aes-256-cbc -K $encrypted_ea884ee24f00_key -iv $encrypted_ea884ee24f00_iv -in .travis.settings-security.xml.enc -out .travis.settings-security.xml -d
 - gpg --import private.key
 deploy:
   provider: script
-  script: cp .travis.settings.xml $HOME/.m2/settings.xml && mvn versions:set -DnewVersion=$TRAVIS_TAG
-    && mvn deploy -P release
+  script: cp .travis.settings.xml $HOME/.m2/settings.xml && cp .travis.settings-security.xml $HOME/.m2/settings-security.xml && mvn versions:set -DnewVersion=$TRAVIS_TAG    && mvn deploy -P release
   skip_cleanup: true
   on:
     tags: true

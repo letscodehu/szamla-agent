@@ -16,6 +16,17 @@
         </url>
     </scm>
 
+    <developers>
+        <developer>
+            <url>https://www.letscode.hu</url>
+            <name>Krisztian Papp</name>
+            <email>krisztian@letscode.hu</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
+
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
