@@ -22,7 +22,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
 /**
  * @author Krisztian_Papp
- *  Test class for {@link SzamlaAgentClient}.
+ * Test class for {@link SzamlaAgentClient}.
  */
 public class SzamlaAgentClientTest {
 
@@ -46,7 +46,7 @@ public class SzamlaAgentClientTest {
         // GIVEN
         byte[] content = requestMarshaller.createXmlContent(createBillingRequest());
         // WHEN
-       underTest.execute(XmlField.CREATE_BILL, content);
+        underTest.execute(XmlField.CREATE_BILL, content);
         // THEN
     }
 
@@ -68,7 +68,10 @@ public class SzamlaAgentClientTest {
 
     private Settings createSettings() {
         Settings settings = new Settings();
-        settings.setAnswerType(2).setDownloadBill(false).seteBill(false).setUser("letscodehu").setPassword("password").setKeyChainPassword("");
+        settings.setAnswerType(2)
+                .setDownloadBill(false)
+                .seteBill(false)
+                .setAgentKey("ujcrrs4aqcxim9bp32rsv5ek6tpkbedwqtns2k7xz6");
         return settings;
     }
 

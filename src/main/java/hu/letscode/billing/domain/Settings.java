@@ -7,10 +7,13 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class Settings {
 
-    @XmlElement(name = "felhasznalo", required = true)
+    @XmlElement(name = "felhasznalo", required = false)
     private String user;
 
-    @XmlElement(name = "jelszo", required = true)
+    @XmlElement(name = "szamlaagentkulcs", required = false)
+    private String agentKey;
+
+    @XmlElement(name = "jelszo", required = false)
     private String password;
 
     @XmlElement(name = "eszamla", required = true)
@@ -52,6 +55,11 @@ public class Settings {
 
     public Settings setAnswerType(int answerType) {
         this.answerType = answerType;
+        return this;
+    }
+
+    public Settings setAgentKey(String agentKey) {
+        this.agentKey = agentKey;
         return this;
     }
 }
