@@ -181,7 +181,18 @@
                             build/pmd-ruleset.xml
                         </ruleset>
                     </rulesets>
+                    <printFailingErrors>true</printFailingErrors>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>validate</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                            <goal>cpd-check</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

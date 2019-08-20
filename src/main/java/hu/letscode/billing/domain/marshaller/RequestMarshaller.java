@@ -1,13 +1,14 @@
 package hu.letscode.billing.domain.marshaller;
 
-import hu.letscode.billing.domain.BillingRequest;
-import hu.letscode.billing.domain.factory.StringWriterFactory;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
+
+import hu.letscode.billing.domain.BillingRequest;
+import hu.letscode.billing.domain.factory.StringWriterFactory;
 
 /**
  * Marshaller class for creating XML from the {@link BillingRequest}.
@@ -30,6 +31,12 @@ public class RequestMarshaller {
         this.stringWriterFactory = stringWriterFactory;
     }
 
+    /**
+     * Marshalls the given request into an XML byte array.
+     * @param billingRequest the request
+     * @return the byte array after marshalling
+     * @throws JAXBException if any marshalling issue happens
+     */
     public byte[] createXmlContent(BillingRequest billingRequest) throws JAXBException {
         StringWriter writer = stringWriterFactory.create();
         Marshaller marshaller = getMarshaller();

@@ -1,8 +1,8 @@
 package hu.letscode.billing.domain.marshaller;
 
-import hu.letscode.billing.domain.Language;
-
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+
+import hu.letscode.billing.domain.Language;
 
 /**
  * Class for marshalling and unmarshalling {@link Language} to {@link String}.

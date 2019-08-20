@@ -1,12 +1,12 @@
 package hu.letscode.billing.domain.factory;
 
-import hu.letscode.billing.domain.Item;
-import hu.letscode.billing.domain.RawItem;
-import hu.letscode.billing.domain.TaxCode;
-
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+
+import hu.letscode.billing.domain.Item;
+import hu.letscode.billing.domain.RawItem;
+import hu.letscode.billing.domain.TaxCode;
 
 /**
  * A factory to create {@link Item}'s from {@link RawItem}'s.
@@ -25,16 +25,31 @@ public class ItemFactory {
         // @TODO add the leftover taxcodes.
     }};
 
+    /**
+     * Create an Item from a RawItem to be ready for marshalling.
+     * @param rawItem the raw item to be transformed.
+     * @return Item
+     */
     public Item create(RawItem rawItem) {
         return create(rawItem.getName(), rawItem.getComment(), rawItem.getUnit(),
                 rawItem.getNetUnitPrice(), rawItem.getAmount(), rawItem.getTaxCode());
     }
 
-
+    /**
+     * Create an Item from a RawItem to be ready for marshalling.
+     * @param name the item's name
+     * @param comment comment
+     * @param unit the unit
+     * @param netUnitPrice the NET unit price of the item
+     * @param amount the price to be payed
+     * @param taxCode the tax code
+     * @return Item
+     */
     public Item create(final String name, final String comment, final String unit, final BigDecimal netUnitPrice,
-                       final BigDecimal amount, final TaxCode taxCode) {
+            final BigDecimal amount, final TaxCode taxCode) {
         Item item = new Item();
-        item.setTitle(name).setUnit(unit).setComment(comment).setTaxCode(taxCode).setNetUnitPrice(netUnitPrice).setAmount(amount);
+        item.setTitle(name).setUnit(unit).setComment(comment).setTaxCode(taxCode).setNetUnitPrice(netUnitPrice)
+                .setAmount(amount);
         BigDecimal netTotal = netUnitPrice.multiply(amount);
         item.setNetTotal(netTotal);
         BigDecimal taxPercent = taxCodeMap.get(taxCode);

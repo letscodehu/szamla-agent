@@ -1,18 +1,23 @@
 package hu.letscode.billing.client;
 
-import org.apache.http.entity.mime.content.ContentBody;
-
 import java.io.IOException;
 import java.io.OutputStream;
 
+import org.apache.http.entity.mime.content.ContentBody;
+
 /**
- * Contentbody implementation to imitate a file upload's content.
+ * Content body implementation to imitate a file upload's content.
  */
 public class ByteContentBody implements ContentBody {
 
     private final String name;
     private final byte[] data;
 
+    /**
+     * Default constructor.
+     * @param name the name of the file
+     * @param data the content
+     */
     public ByteContentBody(String name, byte[] data) {
         this.name = name;
         this.data = data;
@@ -22,6 +27,11 @@ public class ByteContentBody implements ContentBody {
         return name;
     }
 
+    /**
+     * Wries the content of the body to the stream.
+     * @param outputStream the stream to write to.
+     * @throws IOException if the stream cannot be write into.
+     */
     public void writeTo(OutputStream outputStream) throws IOException {
         outputStream.write(data);
     }
