@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlElement;
 /**
  * Object containing information about the users' account which the client operating on behalf. To be serialized as XML.
  */
+@SuppressWarnings("PMD.UnusedPrivateField")
 public class Settings {
 
     @XmlElement(name = "felhasznalo", required = false)
@@ -17,7 +18,7 @@ public class Settings {
     private String password;
 
     @XmlElement(name = "eszamla", required = true)
-    private boolean eBill;
+    private boolean electricBill;
 
     @XmlElement(name = "kulcstartojelszo", required = true)
     private String keyChainPassword;
@@ -38,8 +39,8 @@ public class Settings {
         return this;
     }
 
-    public Settings seteBill(boolean eBill) {
-        this.eBill = eBill;
+    public Settings seteBill(boolean electricBill) {
+        this.electricBill = electricBill;
         return this;
     }
 

@@ -1,9 +1,10 @@
 package hu.letscode.billing.client.factory;
 
-import hu.letscode.billing.client.ByteContentBody;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
+
+import hu.letscode.billing.client.ByteContentBody;
 
 /**
  * Class for creating {@link HttpPost} with multipart entites in it.

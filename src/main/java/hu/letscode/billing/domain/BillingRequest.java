@@ -1,12 +1,16 @@
 package hu.letscode.billing.domain;
 
-import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * The complete billing request. To be serialized as XML.
  */
+@SuppressWarnings("PMD.UnusedPrivateField")
 @XmlRootElement(name = "xmlszamla")
 public class BillingRequest {
 

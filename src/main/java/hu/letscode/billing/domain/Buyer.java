@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlElement;
 /**
  * The buyer of the product/service.
  */
+@SuppressWarnings("PMD.UnusedPrivateField")
 public class Buyer {
 
     @XmlElement(name = "nev")

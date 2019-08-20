@@ -1,13 +1,13 @@
 package hu.letscode.billing.service;
 
+import javax.xml.bind.JAXBException;
+
 import hu.letscode.billing.client.SzamlaAgentClient;
 import hu.letscode.billing.client.XmlField;
 import hu.letscode.billing.domain.BillingRequest;
 import hu.letscode.billing.domain.Seller;
 import hu.letscode.billing.domain.Settings;
 import hu.letscode.billing.domain.marshaller.RequestMarshaller;
-
-import javax.xml.bind.JAXBException;
 
 /**
  * The concrete billing service. Clients should use this class only.
@@ -27,13 +27,15 @@ public class SzamlaAgentBillingService implements BillingService {
      * @param seller the seller
      * @param settings the settings
      */
-    public SzamlaAgentBillingService(SzamlaAgentClient szamlaAgentClient, RequestMarshaller requestMarshaller, Seller seller, Settings settings) {
+    public SzamlaAgentBillingService(SzamlaAgentClient szamlaAgentClient, RequestMarshaller requestMarshaller,
+            Seller seller, Settings settings) {
         this.szamlaAgentClient = szamlaAgentClient;
         this.requestMarshaller = requestMarshaller;
         this.seller = seller;
         this.settings = settings;
     }
 
+    @Override
     public boolean createBill(BillingRequest billingRequest) {
         boolean success = false;
         try {
@@ -53,14 +55,17 @@ public class SzamlaAgentBillingService implements BillingService {
         return billingRequest;
     }
 
+    @Override
     public boolean revokeBill(BillingRequest billingRequest) {
         return false;
     }
 
+    @Override
     public boolean markFulfilled(BillingRequest billingRequest) {
         return false;
     }
 
+    @Override
     public boolean retreivePdf(BillingRequest billingRequest) {
         return false;
     }

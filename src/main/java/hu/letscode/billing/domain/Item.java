@@ -1,12 +1,14 @@
 package hu.letscode.billing.domain;
 
+import java.math.BigDecimal;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.math.BigDecimal;
 
 /**
  * An item on the bills' itemlist.
  */
+@SuppressWarnings("PMD.UnusedPrivateField")
 @XmlRootElement
 public class Item {
 

@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlElement;
 /**
  * Object containing information about the seller of the item/service. To be serialized as XML.
  */
+@SuppressWarnings("PMD.UnusedPrivateField")
 public class Seller {
 
     @XmlElement(name = "bank")

@@ -1,17 +1,19 @@
 package hu.letscode.billing.domain;
 
-import hu.letscode.billing.domain.marshaller.LanguageTypeAdapter;
-import hu.letscode.billing.domain.marshaller.LocalDateAdapter;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Currency;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import hu.letscode.billing.domain.marshaller.LanguageTypeAdapter;
+import hu.letscode.billing.domain.marshaller.LocalDateAdapter;
+
 /**
  * The bills header.
  */
+@SuppressWarnings("PMD.UnusedPrivateField")
 public class Header {
 
     @XmlElement(name = "keltDatum", required = true)

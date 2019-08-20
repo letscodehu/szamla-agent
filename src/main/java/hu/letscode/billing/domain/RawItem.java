@@ -14,8 +14,17 @@ public class RawItem {
     private TaxCode taxCode;
     private BigDecimal amount;
 
+    /**
+     * Default constructor.
+     * @param name the item's name
+     * @param comment comment
+     * @param unit the unit
+     * @param netUnitPrice the NET unit price of the item
+     * @param amount the price to be payed
+     * @param taxCode the tax code
+     */
     public RawItem(String name, String comment, BigDecimal netUnitPrice, String unit, TaxCode taxCode,
-                   BigDecimal amount) {
+            BigDecimal amount) {
         this.name = name;
         this.comment = comment;
         this.netUnitPrice = netUnitPrice;
