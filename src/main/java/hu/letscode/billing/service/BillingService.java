@@ -1,6 +1,7 @@
 package hu.letscode.billing.service;
 
 import hu.letscode.billing.domain.BillingRequest;
+import hu.letscode.billing.domain.BillingCreateResponse;
 
 /**
  * Created by tacsiazuma on 2017.03.11..
@@ -12,7 +13,7 @@ public interface BillingService {
      * @param billingRequest the billing request.
      * @return if successful.
      */
-    boolean createBill(BillingRequest billingRequest);
+    BillingCreateResponse createBill(BillingRequest billingRequest);
 
     /**
      * Revokes an invoice.

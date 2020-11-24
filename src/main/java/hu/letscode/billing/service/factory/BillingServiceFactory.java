@@ -9,7 +9,9 @@ import hu.letscode.billing.client.factory.HttpPostFactory;
 import hu.letscode.billing.domain.Seller;
 import hu.letscode.billing.domain.Settings;
 import hu.letscode.billing.domain.factory.RequestMarshallerFactory;
+import hu.letscode.billing.domain.factory.ResponseUnmarshallerFactory;
 import hu.letscode.billing.domain.marshaller.RequestMarshaller;
+import hu.letscode.billing.domain.marshaller.ResponseUnmarshaller;
 import hu.letscode.billing.service.BillingService;
 import hu.letscode.billing.service.SzamlaAgentBillingService;
 
@@ -25,7 +27,7 @@ public class BillingServiceFactory {
     public BillingService createSzamlaAgent(Seller seller, Settings settings) {
         try {
             return new SzamlaAgentBillingService(createSzamlaAgentClient(), createRequestMarshaller(), seller,
-                    settings);
+                    settings, createResponseUnmarshaller());
         } catch (JAXBException e) {
             throw new RuntimeException("Cannot construct service!", e);
         }
@@ -40,7 +42,7 @@ public class BillingServiceFactory {
         try {
             return new SzamlaAgentBillingService(
                     new SzamlaAgentClient(httpClientFactory, httpPostFactory, SzamlaAgentClient.SZAMLA_AGENT_API_URL),
-                    createRequestMarshaller(), seller, settings);
+                    createRequestMarshaller(), seller, settings, createResponseUnmarshaller());
         } catch (JAXBException e) {
             throw new RuntimeException("Cannot construct service!", e);
         }
@@ -55,4 +57,7 @@ public class BillingServiceFactory {
         return RequestMarshallerFactory.newInstance().create();
     }
 
+    private ResponseUnmarshaller createResponseUnmarshaller() throws JAXBException {
+        return ResponseUnmarshallerFactory.newInstance().create();
+    }
 }

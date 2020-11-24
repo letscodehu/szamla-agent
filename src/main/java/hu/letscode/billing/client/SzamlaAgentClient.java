@@ -1,6 +1,7 @@
 package hu.letscode.billing.client;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -35,18 +36,17 @@ public class SzamlaAgentClient {
      * Executes a request toward the API with the given field and content.
      * @param field the field name to be used.
      * @param xmlContent the content of the request body.
+     * @return {@link InputStream}
      */
-    public void execute(XmlField field, byte[] xmlContent) {
+    public InputStream execute(XmlField field, byte[] xmlContent) {
         CloseableHttpClient httpClient = httpClientFactory.create();
         HttpPost httpPost = httpPostFactory.createWithEntity(apiUrl, field.getName(), xmlContent);
         try {
             CloseableHttpResponse response = httpClient.execute(httpPost);
-            response.getStatusLine();
+            return response.getEntity().getContent();
         } catch (IOException e) {
-            e.printStackTrace();
-            // @TODO handle response errors.
+            throw new RuntimeException(e);
         }
-
     }
 
 }
