@@ -225,7 +225,7 @@
         </module>
         <module name="JavadocMethod">
             <property name="scope" value="public"/>
-            <property name="ignoreMethodNamesRegex" value="(set|get).*"/>
+            <property name="ignoreMethodNamesRegex" value="(is|set|get).*"/>
             <property name="allowMissingParamTags" value="true"/>
             <property name="allowMissingThrowsTags" value="true"/>
             <property name="allowMissingReturnTag" value="true"/>
