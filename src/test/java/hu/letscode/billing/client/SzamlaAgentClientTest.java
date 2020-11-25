@@ -1,24 +1,9 @@
 package hu.letscode.billing.client;
 
-import com.github.tomakehurst.wiremock.junit.WireMockRule;
-import com.google.common.io.ByteStreams;
-
-import hu.letscode.billing.client.factory.HttpPostFactory;
-import hu.letscode.billing.client.factory.TrustAllHttpClientFactory;
-import hu.letscode.billing.domain.*;
-import hu.letscode.billing.domain.factory.ItemFactory;
-import hu.letscode.billing.domain.factory.RequestMarshallerFactory;
-import hu.letscode.billing.domain.factory.ResponseUnmarshallerFactory;
-import hu.letscode.billing.domain.marshaller.RequestMarshaller;
-import hu.letscode.billing.domain.marshaller.ResponseUnmarshaller;
-
-import org.apache.commons.lang3.StringUtils;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.mockito.internal.util.io.IOUtil;
-
-import javax.xml.bind.JAXBException;
+import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.post;
+import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,8 +13,31 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
-import static org.junit.Assert.assertEquals;
+import javax.xml.bind.JAXBException;
+
+import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import com.google.common.io.ByteStreams;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+
+import hu.letscode.billing.client.factory.HttpPostFactory;
+import hu.letscode.billing.client.factory.TrustAllHttpClientFactory;
+import hu.letscode.billing.domain.BillingCreateResponse;
+import hu.letscode.billing.domain.BillingRequest;
+import hu.letscode.billing.domain.Buyer;
+import hu.letscode.billing.domain.Header;
+import hu.letscode.billing.domain.Item;
+import hu.letscode.billing.domain.Language;
+import hu.letscode.billing.domain.Seller;
+import hu.letscode.billing.domain.Settings;
+import hu.letscode.billing.domain.TaxCode;
+import hu.letscode.billing.domain.factory.ItemFactory;
+import hu.letscode.billing.domain.factory.RequestMarshallerFactory;
+import hu.letscode.billing.domain.factory.ResponseUnmarshallerFactory;
+import hu.letscode.billing.domain.marshaller.RequestMarshaller;
+import hu.letscode.billing.domain.marshaller.ResponseUnmarshaller;
 
 /**
  * @author Krisztian_Papp Test class for {@link SzamlaAgentClient}.
@@ -52,9 +60,24 @@ public class SzamlaAgentClientTest {
     }
 
     @Test
-    public void itShouldInvokeUrlWithPost() throws JAXBException, IOException {
+    public void itShouldSerializeResponseWhenFailure() throws JAXBException, IOException {
         // GIVEN
-        stubBillingResponse();
+        stubBillingResponse("mock/response/create_bill_failure.xml");
+        byte[] content = requestMarshaller.createXmlContent(createBillingRequest());
+        // WHEN
+        InputStream actual = underTest.execute(XmlField.CREATE_BILL, content);
+        // THEN
+        BillingCreateResponse response = responseUnmarshaller.marshallResponse(actual, BillingCreateResponse.class);
+        assertEquals(false, response.isSuccess());
+        assertEquals("3", response.getErrorCode());
+        assertEquals("Bejelentkezési hiba - a megadott login név és jelszó pároshoz nem létezik felhasználó",
+                response.getErrorMessage());
+    }
+
+    @Test
+    public void itShouldSerializeResponseWhenSuccess() throws JAXBException, IOException {
+        // GIVEN
+        stubBillingResponse("mock/response/create_bill_success.xml");
         byte[] content = requestMarshaller.createXmlContent(createBillingRequest());
         // WHEN
         InputStream actual = underTest.execute(XmlField.CREATE_BILL, content);
@@ -67,9 +90,8 @@ public class SzamlaAgentClientTest {
         assertEquals("content", response.getPdfContent());
     }
 
-    private void stubBillingResponse() throws IOException {
-        byte[] response = ByteStreams
-                .toByteArray(getClass().getClassLoader().getResourceAsStream("mock/response/create_bill_success.xml"));
+    private void stubBillingResponse(String responseFile) throws IOException {
+        byte[] response = ByteStreams.toByteArray(getClass().getClassLoader().getResourceAsStream(responseFile));
         stubFor(post("/").willReturn(aResponse().withStatus(200).withBody(response)));
     }
 
