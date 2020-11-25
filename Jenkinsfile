@@ -1,5 +1,5 @@
 pipeline {
-    agent 'k3s'
+    agent kubernetes
     stages {
         stage('Run Tests') {
             parallel {
