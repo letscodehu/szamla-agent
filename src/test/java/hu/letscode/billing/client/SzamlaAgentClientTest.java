@@ -1,6 +1,8 @@
 package hu.letscode.billing.client;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import com.google.common.io.ByteStreams;
+
 import hu.letscode.billing.client.factory.HttpPostFactory;
 import hu.letscode.billing.client.factory.TrustAllHttpClientFactory;
 import hu.letscode.billing.domain.*;
@@ -14,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.internal.util.io.IOUtil;
 
 import javax.xml.bind.JAXBException;
 
@@ -65,8 +68,8 @@ public class SzamlaAgentClientTest {
     }
 
     private void stubBillingResponse() throws IOException {
-        byte[] response = getClass().getClassLoader().getResourceAsStream("mock/response/create_bill_success.xml")
-                .readAllBytes();
+        byte[] response = ByteStreams
+                .toByteArray(getClass().getClassLoader().getResourceAsStream("mock/response/create_bill_success.xml"));
         stubFor(post("/").willReturn(aResponse().withStatus(200).withBody(response)));
     }
 
