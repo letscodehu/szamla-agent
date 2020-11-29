@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmlszamlavalasz xmlns="http://www.szamlazz.hu/xmlszamlavalasz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <sikeres>true</sikeres>
+  <szamlaszam>XXX-2012-3</szamlaszam>
+  <szamlanetto>30000</szamlanetto>
+  <szamlabrutto>38100</szamlabrutto>
+  <pdf>content</pdf>
+</xmlszamlavalasz>

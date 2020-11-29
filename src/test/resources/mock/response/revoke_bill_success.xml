@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmlszamlavalasz xmlns="http://www.szamlazz.hu/xmlszamlavalasz">
+    <sikeres>true</sikeres>
+    <szamlaszam>VIDRA-2020-14</szamlaszam>
+    <szamlanetto>-5000</szamlanetto>
+    <szamlabrutto>-5000</szamlabrutto>
+    <kintlevoseg>-5000</kintlevoseg>
+    <vevoifiokurl><![CDATA[https://www.szamlazz.hu/szamla/?page=vevoifiokpay&partguid=dzsh9qyxgbsnxguryhyxgbsn7ixavmyxgbsn&szfejguid=yvmfg8ebasw6kgqwa5afijnd]]></vevoifiokurl>
+</xmlszamlavalasz>

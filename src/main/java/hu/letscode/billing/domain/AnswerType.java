@@ -6,7 +6,7 @@ package hu.letscode.billing.domain;
 public enum AnswerType {
     SIMPLE("1"), XML("2");
 
-    private String value;
+    private final String value;
 
     AnswerType(String s) {
         this.value = s;

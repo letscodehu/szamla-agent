@@ -7,12 +7,12 @@ import java.math.BigDecimal;
  */
 public class RawItem {
 
-    private String name;
-    private String comment;
-    private BigDecimal netUnitPrice;
-    private String unit;
-    private TaxCode taxCode;
-    private BigDecimal amount;
+    private final String name;
+    private final String comment;
+    private final BigDecimal netUnitPrice;
+    private final String unit;
+    private final TaxCode taxCode;
+    private final BigDecimal amount;
 
     /**
      * Default constructor.

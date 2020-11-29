@@ -1,0 +1,23 @@
+<xmlszamlast xmlns="http://www.szamlazz.hu/xmlszamlast">
+    <beallitasok>
+        <szamlaagentkulcs>ujcrrs4aqcxim9bp32rsv5ek6tpkbedwqtns2k7xz6</szamlaagentkulcs>
+        <eszamla>false</eszamla>
+        <szamlaLetoltes>false</szamlaLetoltes>
+        <szamlaLetoltesPld>0</szamlaLetoltesPld>
+    </beallitasok>
+    <fejlec>
+        <szamlaszam>VIDRA-2020-13</szamlaszam>
+        <keltDatum>2020-11-29</keltDatum>
+        <teljesitesDatum>2020-11-29</teljesitesDatum>
+        <tipus>SS</tipus>
+        <szamlaSablon>SZLA_MOST</szamlaSablon>
+    </fejlec>
+    <elado>
+        <emailReplyto>fejlesztes@letscode.hu</emailReplyto>
+        <emailTargy>Számla értesítő</emailTargy>
+        <emailSzoveg>some message</emailSzoveg>
+    </elado>
+    <vevo>
+        <email>krisztian@letscode.hu</email>
+    </vevo>
+</xmlszamlast>

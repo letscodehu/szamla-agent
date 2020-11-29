@@ -1,14 +1,14 @@
 package hu.letscode.billing.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import hu.letscode.billing.domain.serializer.LanguageSerializer;
+
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Currency;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import hu.letscode.billing.domain.marshaller.LanguageTypeAdapter;
-import hu.letscode.billing.domain.marshaller.LocalDateAdapter;
 
 /**
  * The bills header.
@@ -16,61 +16,57 @@ import hu.letscode.billing.domain.marshaller.LocalDateAdapter;
 @SuppressWarnings("PMD.UnusedPrivateField")
 public class Header {
 
-    @XmlElement(name = "keltDatum", required = true)
-    @XmlJavaTypeAdapter(LocalDateAdapter.class)
-    private LocalDateTime leavenedDate;
+    @JacksonXmlProperty(localName = "keltDatum")
+    private LocalDate leavenedDate;
 
-    @XmlElement(name = "teljesitesDatum", required = true)
-    @XmlJavaTypeAdapter(LocalDateAdapter.class)
-    private LocalDateTime fulfillmentDate;
+    @JacksonXmlProperty(localName = "teljesitesDatum")
+    private LocalDate fulfillmentDate;
 
-    @XmlJavaTypeAdapter(LocalDateAdapter.class)
-    @XmlElement(name = "fizetesiHataridoDatum", required = true)
-    private LocalDateTime deadlineDate;
+    @JacksonXmlProperty(localName = "fizetesiHataridoDatum")
+    private LocalDate deadlineDate;
 
-    @XmlElement(name = "fizmod", required = true)
+    @JacksonXmlProperty(localName = "fizmod")
     private String paymentType;
-    @XmlElement(name = "penznem", required = true)
+    @JacksonXmlProperty(localName = "penznem")
     private Currency currency;
-
-    @XmlJavaTypeAdapter(LanguageTypeAdapter.class)
-    @XmlElement(name = "szamlaNyelve", required = true)
+    @JsonSerialize(using = LanguageSerializer.class)
+    @JacksonXmlProperty(localName = "szamlaNyelve")
     private Language language;
-    @XmlElement(name = "megjegyzes", required = true)
+    @JacksonXmlProperty(localName = "megjegyzes")
     private String comment;
-    @XmlElement(name = "arfolyamBank", required = true)
+    @JacksonXmlProperty(localName = "arfolyamBank")
     private String exchangeBank;
-    @XmlElement(name = "arfolyam", required = true)
+    @JacksonXmlProperty(localName = "arfolyam")
     private BigDecimal exchangeRate;
-    @XmlElement(name = "rendelesSzam", required = true)
+    @JacksonXmlProperty(localName = "rendelesSzam")
     private String orderNumber;
-    @XmlElement(name = "elolegszamla", required = true)
+    @JacksonXmlProperty(localName = "elolegszamla")
     private boolean imprestBill;
-    @XmlElement(name = "vegszamla", required = true)
+    @JacksonXmlProperty(localName = "vegszamla")
     private boolean finalBill;
-    @XmlElement(name = "helyesbitoszamla", required = true)
+    @JacksonXmlProperty(localName = "helyesbitoszamla")
     private boolean correctionBill;
-    @XmlElement(name = "helyesbitettSzamla", required = true)
+    @JacksonXmlProperty(localName = "helyesbitettSzamla")
     private String correctedBillNumber;
-    @XmlElement(name = "dijbekero", required = true)
+    @JacksonXmlProperty(localName = "dijbekero")
     private boolean prepaymentRequest;
-    @XmlElement(name = "szamlaszamElotag", required = true)
+    @JacksonXmlProperty(localName = "szamlaszamElotag")
     private String orderNumberPrefix;
-    @XmlElement(name = "fizetve", required = true)
+    @JacksonXmlProperty(localName = "fizetve")
     private boolean paidAlready;
 
     public Header setLeavenedDate(LocalDateTime leavenedDate) {
-        this.leavenedDate = leavenedDate;
+        this.leavenedDate = leavenedDate.toLocalDate();
         return this;
     }
 
     public Header setFulfillmentDate(LocalDateTime fulfillmentDate) {
-        this.fulfillmentDate = fulfillmentDate;
+        this.fulfillmentDate = fulfillmentDate.toLocalDate();
         return this;
     }
 
     public Header setDeadlineDate(LocalDateTime deadlineDate) {
-        this.deadlineDate = deadlineDate;
+        this.deadlineDate = deadlineDate.toLocalDate();
         return this;
     }
 
@@ -143,4 +139,6 @@ public class Header {
         this.correctedBillNumber = correctedBillNumber;
         return this;
     }
+
+
 }

@@ -1,5 +1,7 @@
 package hu.letscode.billing.domain;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @SuppressWarnings("PMD.UnusedPrivateField")
 @XmlRootElement(name = "xmlszamla")
 public class BillingRequest {
+
+    @JacksonXmlProperty(isAttribute = true)
+    private final String xmlns = "http://www.szamlazz.hu/xmlszamla";
 
     @XmlElement(name = "beallitasok")
     private Settings settings;
@@ -28,7 +33,7 @@ public class BillingRequest {
 
     @XmlElementWrapper(name = "tetelek")
     @XmlElement(name = "tetel")
-    private List<Item> items = new ArrayList<Item>();
+    private List<Item> items = new ArrayList<>();
 
     public BillingRequest setSettings(Settings settings) {
         this.settings = settings;

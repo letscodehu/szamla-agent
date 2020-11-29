@@ -4,7 +4,7 @@
 
     <groupId>hu.letscode</groupId>
     <artifactId>szamla-agent</artifactId>
-    <version>0.2.1</version>
+    <version>1.0.0</version>
 
     <name>Szamla-agent client</name>
     <description>Java client to communicate with szamlazz.hu API</description>
@@ -128,20 +128,30 @@
             <version>1.1.1</version>
         </dependency>
         <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <version>2.11.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-parameter-names</artifactId>
+            <version>2.11.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jdk8</artifactId>
+            <version>2.11.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.11.1</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13.1</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.2.9</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.xml.bind</groupId>
-            <artifactId>jaxb-impl</artifactId>
-            <version>2.2.5-b10</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
@@ -225,6 +235,7 @@
                     <failOnViolation>true</failOnViolation>
                     <failsOnError>true</failsOnError>
                     <linkXRef>false</linkXRef>
+                    <suppressionsLocation>build/suppression.xml</suppressionsLocation>
                 </configuration>
                 <executions>
                     <execution>

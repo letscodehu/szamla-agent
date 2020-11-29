@@ -11,7 +11,7 @@ public enum XmlField {
     RECORDING_CREDITS("action-szamla_agent_kifiz"),
     PDF_QUERY("action-szamla_agent_pdf");
 
-    private String name;
+    private final String name;
 
     XmlField(String name) {
         this.name = name;
