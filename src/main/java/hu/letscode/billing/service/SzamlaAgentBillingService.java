@@ -1,17 +1,9 @@
 package hu.letscode.billing.service;
 
-import java.io.InputStream;
-
-import javax.xml.bind.JAXBException;
-
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import hu.letscode.billing.client.SzamlaAgentClient;
 import hu.letscode.billing.client.XmlField;
-import hu.letscode.billing.domain.BillingRequest;
-import hu.letscode.billing.domain.BillingCreateResponse;
-import hu.letscode.billing.domain.Seller;
-import hu.letscode.billing.domain.Settings;
-import hu.letscode.billing.domain.marshaller.RequestMarshaller;
-import hu.letscode.billing.domain.marshaller.ResponseUnmarshaller;
+import hu.letscode.billing.domain.*; // NOPMD
 
 /**
  * The concrete billing service. Clients should use this class only.
@@ -21,41 +13,36 @@ import hu.letscode.billing.domain.marshaller.ResponseUnmarshaller;
 public class SzamlaAgentBillingService implements BillingService {
 
     private final SzamlaAgentClient szamlaAgentClient;
-    private final RequestMarshaller requestMarshaller;
-    private final ResponseUnmarshaller responseUnmarshaller;
     private final Seller seller;
     private final Settings settings;
+    private final XmlMapper xmlMapper;
 
     /**
      * Constructor.
      * 
      * @param szamlaAgentClient the client
-     * @param requestMarshaller the request marshaller
      * @param seller            the seller
      * @param settings          the settings
      */
     public SzamlaAgentBillingService(final SzamlaAgentClient szamlaAgentClient,
-            final RequestMarshaller requestMarshaller, final Seller seller, final Settings settings,
-            final ResponseUnmarshaller responseMarshaller) {
-        this.responseUnmarshaller = responseMarshaller;
+                                     final Seller seller, final Settings settings, final XmlMapper xmlMapper
+                                     ) {
         this.szamlaAgentClient = szamlaAgentClient;
-        this.requestMarshaller = requestMarshaller;
         this.seller = seller;
         this.settings = settings;
+        this.xmlMapper = xmlMapper;
     }
 
     @Override
     public BillingCreateResponse createBill(final BillingRequest billingRequest) {
         try {
             final BillingRequest request = transformRequest(billingRequest);
-            final byte[] content = requestMarshaller.createXmlContent(request);
-            BillingCreateResponse response = transormResponse(szamlaAgentClient.execute(XmlField.CREATE_BILL, content),
+            final byte[] content = xmlMapper.writeValueAsBytes(request);
+            return xmlMapper.readValue(szamlaAgentClient.execute(XmlField.CREATE_BILL, content),
                     BillingCreateResponse.class);
-            return response;
-        } catch (final JAXBException e) {
+        } catch (final Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 
     private BillingRequest transformRequest(final BillingRequest billingRequest) {
@@ -64,14 +51,17 @@ public class SzamlaAgentBillingService implements BillingService {
         return billingRequest;
     }
 
-    private <T> T transormResponse(final InputStream stream, final Class<T> type) throws JAXBException {
-        return responseUnmarshaller.marshallResponse(stream, type);
+    @Override
+    public BillingRevokeResponse revokeBill(final BillRevokeRequest billRevokeRequest) {
+        try {
+            final byte[] content = xmlMapper.writeValueAsBytes(billRevokeRequest);
+            return xmlMapper.readValue(szamlaAgentClient.execute(XmlField.STORNO_BILL, content),
+                    BillingRevokeResponse.class);
+        } catch (final Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    @Override
-    public boolean revokeBill(final BillingRequest billingRequest) {
-        return false;
-    }
 
     @Override
     public boolean markFulfilled(final BillingRequest billingRequest) {

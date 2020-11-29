@@ -1,8 +1,6 @@
 package hu.letscode.billing.client;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.post;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
@@ -15,9 +13,13 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import com.google.common.io.ByteStreams;
 
+import hu.letscode.billing.service.factory.BillingServiceFactory;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,40 +36,45 @@ import hu.letscode.billing.domain.Seller;
 import hu.letscode.billing.domain.Settings;
 import hu.letscode.billing.domain.TaxCode;
 import hu.letscode.billing.domain.factory.ItemFactory;
-import hu.letscode.billing.domain.factory.RequestMarshallerFactory;
-import hu.letscode.billing.domain.factory.ResponseUnmarshallerFactory;
-import hu.letscode.billing.domain.marshaller.RequestMarshaller;
-import hu.letscode.billing.domain.marshaller.ResponseUnmarshaller;
 
 /**
  * @author Krisztian_Papp Test class for {@link SzamlaAgentClient}.
  */
-public class SzamlaAgentClientTest {
+public class CreateBillTest {
 
     private SzamlaAgentClient underTest;
-    private RequestMarshaller requestMarshaller;
-    private ResponseUnmarshaller responseUnmarshaller;
-    private String apiUrl = "http://localhost:8089";
+    private XmlMapper xmlMapper;
+    private final String apiUrl = "http://localhost:8089";
 
     @Rule
     public WireMockRule wireMockRule = new WireMockRule(8089);
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         underTest = new SzamlaAgentClient(new TrustAllHttpClientFactory(), new HttpPostFactory(), apiUrl);
-        requestMarshaller = RequestMarshallerFactory.newInstance().create();
-        responseUnmarshaller = ResponseUnmarshallerFactory.newInstance().create();
+        xmlMapper = BillingServiceFactory.createXmlMapper();
     }
 
     @Test
-    public void itShouldSerializeResponseWhenFailure() throws JAXBException, IOException {
+    public void itShouldSerializeRequestAccordingToScheme() throws IOException {
         // GIVEN
         stubBillingResponse("mock/response/create_bill_failure.xml");
-        byte[] content = requestMarshaller.createXmlContent(createBillingRequest());
+        byte[] content = xmlMapper.writeValueAsBytes(createBillingRequest());
+        // WHEN
+        underTest.execute(XmlField.CREATE_BILL, content);
+        // THEN
+        verifyRequest("expected/request/create_bill.xml", "action-xmlagentxmlfile");
+    }
+
+    @Test
+    public void itShouldSerializeResponseWhenFailure() throws IOException {
+        // GIVEN
+        stubBillingResponse("mock/response/create_bill_failure.xml");
+        byte[] content = xmlMapper.writeValueAsBytes(createBillingRequest());
         // WHEN
         InputStream actual = underTest.execute(XmlField.CREATE_BILL, content);
         // THEN
-        BillingCreateResponse response = responseUnmarshaller.marshallResponse(actual, BillingCreateResponse.class);
+        BillingCreateResponse response = xmlMapper.readValue(actual, BillingCreateResponse.class);
         assertEquals(false, response.isSuccess());
         assertEquals("3", response.getErrorCode());
         assertEquals("Bejelentkezési hiba - a megadott login név és jelszó pároshoz nem létezik felhasználó",
@@ -78,11 +85,11 @@ public class SzamlaAgentClientTest {
     public void itShouldSerializeResponseWhenSuccess() throws JAXBException, IOException {
         // GIVEN
         stubBillingResponse("mock/response/create_bill_success.xml");
-        byte[] content = requestMarshaller.createXmlContent(createBillingRequest());
+        byte[] content = xmlMapper.writeValueAsBytes(createBillingRequest());
         // WHEN
         InputStream actual = underTest.execute(XmlField.CREATE_BILL, content);
         // THEN
-        BillingCreateResponse response = responseUnmarshaller.marshallResponse(actual, BillingCreateResponse.class);
+        BillingCreateResponse response = xmlMapper.readValue(actual, BillingCreateResponse.class);
         assertEquals(true, response.isSuccess());
         assertEquals("XXX-2012-3", response.getBillNumber());
         assertEquals(BigDecimal.valueOf(30000), response.getBillNetValue());
@@ -93,6 +100,12 @@ public class SzamlaAgentClientTest {
     private void stubBillingResponse(String responseFile) throws IOException {
         byte[] response = ByteStreams.toByteArray(getClass().getClassLoader().getResourceAsStream(responseFile));
         stubFor(post("/").willReturn(aResponse().withStatus(200).withBody(response)));
+    }
+
+    private void verifyRequest(String requestFile, String fieldName) throws IOException {
+        byte[] response = ByteStreams.toByteArray(getClass().getClassLoader().getResourceAsStream(requestFile));
+        wireMockRule.verify(postRequestedFor(urlEqualTo("/")).withAllRequestBodyParts(aMultipart(fieldName)
+                .withBody(equalToXml(new String(response)))));
     }
 
     private BillingRequest createBillingRequest() {
@@ -120,7 +133,7 @@ public class SzamlaAgentClientTest {
     }
 
     private List<Item> createItemList() {
-        List<Item> items = new ArrayList<Item>();
+        List<Item> items = new ArrayList<>();
         items.add(createItem());
         return items;
     }
@@ -141,9 +154,11 @@ public class SzamlaAgentClientTest {
     private Header createHeader() {
         Header header = new Header();
         header.setComment("test").setCorrectionBill(false).setFinalBill(false).setLanguage(Language.HU)
-                .setDeadlineDate(LocalDateTime.now().plusDays(16)).setLeavenedDate(LocalDateTime.now())
+                .setDeadlineDate(LocalDateTime.of(2020, 11, 29, 0,0))
+                .setLeavenedDate(LocalDateTime.of(2020, 11, 29, 0,0))
                 .setPaymentType("Átutalás").setCurrency(Currency.getInstance("HUF")).setImprestBill(false)
-                .setExchangeBank("OTP").setExchangeRate(BigDecimal.ONE).setFulfillmentDate(LocalDateTime.now());
+                .setExchangeBank("OTP").setExchangeRate(BigDecimal.ONE)
+                .setFulfillmentDate(LocalDateTime.of(2020, 11, 29, 0,0));
         return header;
     }
 

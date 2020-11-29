@@ -21,7 +21,7 @@ public enum ErrorCode {
     TAX_AMOUNT_MISMATCH(260),
     GROSS_AMOUNT_MISMATCH(261);
 
-    private int code;
+    private final int code;
 
     ErrorCode(int code) {
 
