@@ -2,6 +2,7 @@ package hu.letscode.billing.client;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.xml.bind.JAXBException;
@@ -81,6 +82,9 @@ public class RevokeBillTest {
         assertTrue(response.isSuccess());
         assertNull(response.getErrorMessage());
         assertNull(response.getErrorCode());
+        assertEquals(new BigDecimal(-5000), response.getBillGrossValue());
+        assertEquals(new BigDecimal(-5000), response.getBillNetValue());
+        assertEquals(new BigDecimal(-5000), response.getReceivable());
         assertEquals("https://www.szamlazz.hu/szamla/?page=vevoifiokpay&partguid=dzsh9qyxgbsnxguryhyxgbsn7ixavmyxgbsn&szfejguid=yvmfg8ebasw6kgqwa5afijnd", response.getUrlForBuyer());
     }
 
