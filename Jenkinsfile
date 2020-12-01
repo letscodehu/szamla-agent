@@ -44,7 +44,7 @@ pipeline {
                 GPG_PASSWORD = credentials('gpg-password-to-oss-sonatype')
             }
              input {
-                 message "Should we release to maven?"
+               message "Should we release to maven?"
                parameters {
                      string(name: 'VERSION', defaultValue: '0.3.0', description: 'What version should we release?')
                 }
@@ -52,6 +52,7 @@ pipeline {
             steps {
                  container('java-8')
                 {
+                git branch: 'master', credentialsId: 'jenkins-github-token-letscodehu', url: 'https://github.com/letscodehu/szamla-agent'
                 sh 'echo "Releasing ${VERSION}"'
                 sh '''
                     gpg --import /secrets/public.key
