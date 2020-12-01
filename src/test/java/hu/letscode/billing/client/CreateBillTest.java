@@ -1,6 +1,12 @@
 package hu.letscode.billing.client;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static com.github.tomakehurst.wiremock.client.WireMock.aMultipart;
+import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.equalToXml;
+import static com.github.tomakehurst.wiremock.client.WireMock.post;
+import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
@@ -13,13 +19,10 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import com.google.common.io.ByteStreams;
 
-import hu.letscode.billing.service.factory.BillingServiceFactory;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -36,6 +39,7 @@ import hu.letscode.billing.domain.Seller;
 import hu.letscode.billing.domain.Settings;
 import hu.letscode.billing.domain.TaxCode;
 import hu.letscode.billing.domain.factory.ItemFactory;
+import hu.letscode.billing.service.factory.BillingServiceFactory;
 
 /**
  * @author Krisztian_Papp Test class for {@link SzamlaAgentClient}.
@@ -96,6 +100,7 @@ public class CreateBillTest {
         assertEquals(BigDecimal.valueOf(38100), response.getBillGrossValue());
         assertEquals(BigDecimal.valueOf(38100), response.getReceivable());
         assertEquals("content", response.getPdfContent());
+        assertEquals("someurl", response.getUrlForBuyer());
     }
 
     private void stubBillingResponse(String responseFile) throws IOException {
