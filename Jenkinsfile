@@ -37,6 +37,9 @@ pipeline {
             
         }
         stage('Release to maven') {
+            when {
+                branch 'master'
+            }
             environment {
                 GPG_PASSWORD = credentials('gpg-password-to-oss-sonatype')
             }
