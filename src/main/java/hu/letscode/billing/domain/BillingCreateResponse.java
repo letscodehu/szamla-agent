@@ -2,11 +2,13 @@ package hu.letscode.billing.domain;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 /**
  * The API response.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class BillingCreateResponse {
 
     @JacksonXmlProperty(localName = "sikeres")
@@ -25,6 +27,8 @@ public class BillingCreateResponse {
     private String errorMessage;
     @JacksonXmlProperty(localName = "kintlevoseg")
     private BigDecimal receivable;
+    @JacksonXmlProperty(localName = "vevoifiokurl")
+    private String urlForBuyer;
     // CPD-OFF
 
     public boolean isSuccess() {
@@ -89,6 +93,14 @@ public class BillingCreateResponse {
 
     public void setReceivable(BigDecimal receivable) {
         this.receivable = receivable;
+    }
+
+    public String getUrlForBuyer() {
+        return urlForBuyer;
+    }
+
+    public void setUrlForBuyer(String urlForBuyer) {
+        this.urlForBuyer = urlForBuyer;
     }
     // CPD-ON
 
