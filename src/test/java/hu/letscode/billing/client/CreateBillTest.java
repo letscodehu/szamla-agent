@@ -94,6 +94,7 @@ public class CreateBillTest {
         assertEquals("XXX-2012-3", response.getBillNumber());
         assertEquals(BigDecimal.valueOf(30000), response.getBillNetValue());
         assertEquals(BigDecimal.valueOf(38100), response.getBillGrossValue());
+        assertEquals(BigDecimal.valueOf(38100), response.getReceivable());
         assertEquals("content", response.getPdfContent());
     }
 
