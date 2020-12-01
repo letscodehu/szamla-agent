@@ -4,5 +4,7 @@
   <szamlaszam>XXX-2012-3</szamlaszam>
   <szamlanetto>30000</szamlanetto>
   <szamlabrutto>38100</szamlabrutto>
+  <kintlevoseg>38100</kintlevoseg>
+  <vevoifiokurl>someurl</vevoifiokurl>
   <pdf>content</pdf>
 </xmlszamlavalasz>

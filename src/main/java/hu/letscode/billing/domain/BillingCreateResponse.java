@@ -2,33 +2,33 @@ package hu.letscode.billing.domain;
 
 import java.math.BigDecimal;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 /**
  * The API response.
  */
-@XmlRootElement(namespace = "http://www.szamlazz.hu/xmlszamlavalasz", name = "xmlszamlavalasz")
-@XmlAccessorType(XmlAccessType.FIELD)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class BillingCreateResponse {
 
-    @XmlElement(name = "sikeres", required = true)
+    @JacksonXmlProperty(localName = "sikeres")
     private boolean success;
-    @XmlElement(name = "szamlaszam")
+    @JacksonXmlProperty(localName = "szamlaszam")
     private String billNumber;
-    @XmlElement(name = "szamlanetto")
+    @JacksonXmlProperty(localName = "szamlanetto")
     private BigDecimal billNetValue;
-    @XmlElement(name = "szamlabrutto")
+    @JacksonXmlProperty(localName = "szamlabrutto")
     private BigDecimal billGrossValue;
-    @XmlElement(name = "pdf")
+    @JacksonXmlProperty(localName = "pdf")
     private String pdfContent;
-    @XmlElement(name = "hibakod")
+    @JacksonXmlProperty(localName = "hibakod")
     private String errorCode;
-    @XmlElement(name = "hibauzenet")
+    @JacksonXmlProperty(localName = "hibauzenet")
     private String errorMessage;
-
+    @JacksonXmlProperty(localName = "kintlevoseg")
+    private BigDecimal receivable;
+    @JacksonXmlProperty(localName = "vevoifiokurl")
+    private String urlForBuyer;
     // CPD-OFF
 
     public boolean isSuccess() {
@@ -85,6 +85,22 @@ public class BillingCreateResponse {
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+
+    public BigDecimal getReceivable() {
+        return receivable;
+    }
+
+    public void setReceivable(BigDecimal receivable) {
+        this.receivable = receivable;
+    }
+
+    public String getUrlForBuyer() {
+        return urlForBuyer;
+    }
+
+    public void setUrlForBuyer(String urlForBuyer) {
+        this.urlForBuyer = urlForBuyer;
     }
     // CPD-ON
 
