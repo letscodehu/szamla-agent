@@ -34,6 +34,8 @@ public class BillRevokeRequest {
         private boolean downloadBill;
         @JacksonXmlProperty(localName = "szamlaLetoltesPld")
         private int downloadBillOriginal;
+        @JacksonXmlProperty(localName = "valaszVerzio")
+        private int answerType;
 
         public String getUsername() {
             return username;
@@ -81,6 +83,14 @@ public class BillRevokeRequest {
 
         public void setDownloadBillOriginal(int downloadBillOriginal) {
             this.downloadBillOriginal = downloadBillOriginal;
+        }
+
+        public int getAnswerType() {
+            return answerType;
+        }
+
+        public void setAnswerType(int answerType) {
+            this.answerType = answerType;
         }
     }
 

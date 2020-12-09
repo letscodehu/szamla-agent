@@ -22,32 +22,39 @@ public class BillingServiceFactory {
 
     /**
      * Creates an XML mapper tailored for the szamlazz.hu request/responses.
-     * @return XmlMapper
+     * 
+     * @return {@link XmlMapper}
      */
     public static XmlMapper createXmlMapper() {
         JacksonXmlModule module = new JacksonXmlModule();
         module.addSerializer(Language.class, new LanguageSerializer());
-        return XmlMapper.builder().disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-                .findAndAddModules().addModule(module).serializationInclusion(JsonInclude.Include.NON_EMPTY).build();
+        return XmlMapper.builder().disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS).findAndAddModules()
+                .addModule(module).serializationInclusion(JsonInclude.Include.NON_EMPTY).build();
     }
 
     /**
      * Creates a {@link SzamlaAgentBillingService}.
      *
-     * @return
+     * @param seller   the seller object
+     * @param settings the default settings object
+     * @return {@link BillingService}
      */
     public BillingService createSzamlaAgent(Seller seller, Settings settings) {
-        return new SzamlaAgentBillingService(createSzamlaAgentClient(), seller,
-                settings, createXmlMapper());
+        return new SzamlaAgentBillingService(createSzamlaAgentClient(), seller, settings, createXmlMapper());
     }
 
     /**
      * Creates a {@link SzamlaAgentBillingService}.
      *
-     * @return
+     * @param httpClientFactory client factory
+     * @param httpPostFactory   post object factory
+     * @param settings          the default settings
+     * @param seller            the default seller
+     *
+     * @return {@link BillingService}
      */
     public BillingService createSzamlaAgent(HttpClientFactory httpClientFactory, HttpPostFactory httpPostFactory,
-                                            Settings settings, Seller seller) {
+            Settings settings, Seller seller) {
         return new SzamlaAgentBillingService(
                 new SzamlaAgentClient(httpClientFactory, httpPostFactory, SzamlaAgentClient.SZAMLA_AGENT_API_URL),
                 seller, settings, createXmlMapper());

@@ -67,7 +67,8 @@ public class RevokeBillTest {
         BillingRevokeResponse response = xmlMapper.readValue(actual, BillingRevokeResponse.class);
         assertFalse(response.isSuccess());
         assertEquals("173", response.getErrorCode());
-        assertEquals("A számla kelte nem lehet korábbi, mint az utoljára elkészített számláé (2020.11.29.).", response.getErrorMessage());
+        assertEquals("A számla kelte nem lehet korábbi, mint az utoljára elkészített számláé (2020.11.29.).",
+                response.getErrorMessage());
     }
 
     @Test
@@ -85,7 +86,9 @@ public class RevokeBillTest {
         assertEquals(new BigDecimal(-5000), response.getBillGrossValue());
         assertEquals(new BigDecimal(-5000), response.getBillNetValue());
         assertEquals(new BigDecimal(-5000), response.getReceivable());
-        assertEquals("https://www.szamlazz.hu/szamla/?page=vevoifiokpay&partguid=dzsh9qyxgbsnxguryhyxgbsn7ixavmyxgbsn&szfejguid=yvmfg8ebasw6kgqwa5afijnd", response.getUrlForBuyer());
+        assertEquals(
+                "https://www.szamlazz.hu/szamla/?page=vevoifiokpay&partguid=dzsh9qyxgbsnxguryhyxgbsn7ixavmyxgbsn&szfejguid=yvmfg8ebasw6kgqwa5afijnd",
+                response.getUrlForBuyer());
     }
 
     private void stubBillingResponse(String responseFile) throws IOException {
@@ -95,8 +98,8 @@ public class RevokeBillTest {
 
     private void verifyRequest(String requestFile, String fieldName) throws IOException {
         byte[] response = ByteStreams.toByteArray(getClass().getClassLoader().getResourceAsStream(requestFile));
-        wireMockRule.verify(postRequestedFor(urlEqualTo("/")).withAllRequestBodyParts(aMultipart(fieldName)
-                .withBody(equalToXml(new String(response)))));
+        wireMockRule.verify(postRequestedFor(urlEqualTo("/"))
+                .withAllRequestBodyParts(aMultipart(fieldName).withBody(equalToXml(new String(response)))));
     }
 
     private BillRevokeRequest createBillingRequest() {
@@ -117,8 +120,9 @@ public class RevokeBillTest {
     private BillRevokeRequest.RevokeSettings createSettings() {
         BillRevokeRequest.RevokeSettings settings = new BillRevokeRequest.RevokeSettings();
         settings.setDownloadBill(false);
-                settings.seteBill(false);
-                settings.setAgentKey("ujcrrs4aqcxim9bp32rsv5ek6tpkbedwqtns2k7xz6");
+        settings.seteBill(false);
+        settings.setAnswerType(2);
+        settings.setAgentKey("ujcrrs4aqcxim9bp32rsv5ek6tpkbedwqtns2k7xz6");
         return settings;
     }
 
@@ -131,11 +135,10 @@ public class RevokeBillTest {
     private RevokeHeader createHeader() {
         RevokeHeader header = new RevokeHeader();
         header.setBillNumber("VIDRA-2020-13");
-        header.setFulfillmentDate(LocalDate.of(2020, 11, 29 ));
-        header.setIssuedDate(LocalDate.of(2020, 11, 29 ));
+        header.setFulfillmentDate(LocalDate.of(2020, 11, 29));
+        header.setIssuedDate(LocalDate.of(2020, 11, 29));
         header.setTemplate(Template.SZLA_MOST);
         header.setType("SS");
         return header;
     }
 }
-
