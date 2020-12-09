@@ -23,6 +23,7 @@ public class SzamlaAgentBillingService implements BillingService {
      * @param szamlaAgentClient the client
      * @param seller            the seller
      * @param settings          the settings
+     * @param xmlMapper         the xml mapper
      */
     public SzamlaAgentBillingService(final SzamlaAgentClient szamlaAgentClient,
                                      final Seller seller, final Settings settings, final XmlMapper xmlMapper
