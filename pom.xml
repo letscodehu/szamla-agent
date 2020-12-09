@@ -4,7 +4,7 @@
 
     <groupId>hu.letscode</groupId>
     <artifactId>szamla-agent</artifactId>
-    <version>0.3.0</version>
+    <version>0.3.0-SNAPSHOT</version>
 
     <name>Szamla-agent client</name>
     <description>Java client to communicate with szamlazz.hu API</description>
@@ -95,6 +95,7 @@
                             <serverId>ossrh</serverId>
                             <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                             <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                            <stagingProgressTimeoutMinutes>10</stagingProgressTimeoutMinutes>
                         </configuration>
                     </plugin>
                     <plugin>
