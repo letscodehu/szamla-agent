@@ -1,13 +1,13 @@
 package hu.letscode.billing.domain;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 /**
  * The complete billing request. To be serialized as XML.
@@ -20,43 +20,28 @@ public class BillingRequest {
     private final String xmlns = "http://www.szamlazz.hu/xmlszamla";
 
     @XmlElement(name = "beallitasok")
-    private Settings settings;
+    private final Settings settings;
 
     @XmlElement(name = "fejlec")
-    private Header header;
+    private final Header header;
 
     @XmlElement(name = "elado")
-    private Seller seller;
+    private final Seller seller;
 
     @XmlElement(name = "vevo")
-    private Buyer buyer;
+    private final Buyer buyer;
 
     @XmlElementWrapper(name = "tetelek")
     @XmlElement(name = "tetel")
-    private List<Item> items = new ArrayList<>();
+    private final List<Item> items;
 
-    public BillingRequest setSettings(Settings settings) {
+    public BillingRequest(final Settings settings, final Header header, final Seller seller, final Buyer buyer,
+            final List<Item> items) {
         this.settings = settings;
-        return this;
-    }
-
-    public BillingRequest setHeader(Header header) {
         this.header = header;
-        return this;
-    }
-
-    public BillingRequest setSeller(Seller seller) {
         this.seller = seller;
-        return this;
-    }
-
-    public BillingRequest setBuyer(Buyer buyer) {
         this.buyer = buyer;
-        return this;
+        this.items = Collections.unmodifiableList(items);
     }
 
-    public BillingRequest setItems(List<Item> items) {
-        this.items = items;
-        return this;
-    }
 }

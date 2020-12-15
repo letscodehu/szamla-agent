@@ -9,101 +9,51 @@ import javax.xml.bind.annotation.XmlElement;
 public class Buyer {
 
     @XmlElement(name = "nev")
-    private String name;
+    private final String name;
     @XmlElement(name = "irsz")
-    private String postalCode;
+    private final String postalCode;
     @XmlElement(name = "telepules")
-    private String city;
+    private final String city;
     @XmlElement(name = "cim")
-    private String address;
+    private final String address;
     @XmlElement(name = "email")
-    private String email;
+    private final String email;
     @XmlElement(name = "sendEmail")
-    private boolean sendMail;
+    private final boolean sendMail;
     @XmlElement(name = "adoszam")
-    private String taxNumber;
+    private final String taxNumber;
     @XmlElement(name = "postazasiNev")
-    private String mailingName;
+    private final String mailingName;
     @XmlElement(name = "postazasiIrsz")
-    private String mailingPostalCode;
+    private final String mailingPostalCode;
     @XmlElement(name = "postazasiTelepules")
-    private String mailingCity;
+    private final String mailingCity;
     @XmlElement(name = "postazasiCim")
-    private String mailingAddress;
+    private final String mailingAddress;
     @XmlElement(name = "alairoNeve")
-    private String signatoryName;
+    private final String signatoryName;
     @XmlElement(name = "telefonszam")
-    private String phoneNumber;
+    private final String phoneNumber;
     @XmlElement(name = "megjegyzes")
-    private String comment;
+    private final String comment;
 
-    public Buyer setName(String name) {
+    public Buyer(String name, String postalCode, String city, String address, String email, boolean sendMail,
+            String taxNumber, String mailingName, String mailingPostalCode, String mailingCity, String mailingAddress,
+            String signatoryName, String phoneNumber, String comment) {
         this.name = name;
-        return this;
-    }
-
-    public Buyer setPostalCode(String postalCode) {
         this.postalCode = postalCode;
-        return this;
-    }
-
-    public Buyer setCity(String city) {
         this.city = city;
-        return this;
-    }
-
-    public Buyer setAddress(String address) {
         this.address = address;
-        return this;
-    }
-
-    public Buyer setEmail(String email) {
         this.email = email;
-        return this;
-    }
-
-    public Buyer setSendMail(boolean sendMail) {
         this.sendMail = sendMail;
-        return this;
-    }
-
-    public Buyer setTaxNumber(String taxNumber) {
         this.taxNumber = taxNumber;
-        return this;
-    }
-
-    public Buyer setMailingName(String mailingName) {
         this.mailingName = mailingName;
-        return this;
-    }
-
-    public Buyer setMailingPostalCode(String mailingPostalCode) {
         this.mailingPostalCode = mailingPostalCode;
-        return this;
-    }
-
-    public Buyer setMailingCity(String mailingCity) {
         this.mailingCity = mailingCity;
-        return this;
-    }
-
-    public Buyer setMailingAddress(String mailingAddress) {
         this.mailingAddress = mailingAddress;
-        return this;
-    }
-
-    public Buyer setSignatoryName(String signatoryName) {
         this.signatoryName = signatoryName;
-        return this;
-    }
-
-    public Buyer setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-        return this;
+        this.comment = comment;
     }
 
-    public Buyer setComment(String comment) {
-        this.comment = comment;
-        return this;
-    }
 }

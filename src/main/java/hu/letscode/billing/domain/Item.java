@@ -13,66 +13,35 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Item {
 
     @XmlElement(name = "megnevezes", required = true)
-    private String title;
+    private final String title;
     @XmlElement(name = "mennyiseg", required = true)
-    private BigDecimal amount;
+    private final BigDecimal amount;
     @XmlElement(name = "mennyisegiEgyseg", required = true)
-    private String unit;
+    private final String unit;
     @XmlElement(name = "nettoEgysegar", required = true)
-    private BigDecimal netUnitPrice;
+    private final BigDecimal netUnitPrice;
     @XmlElement(name = "afakulcs", required = true)
-    private TaxCode taxCode;
+    private final TaxCode taxCode;
     @XmlElement(name = "nettoErtek", required = true)
-    private BigDecimal netTotal;
+    private final BigDecimal netTotal;
     @XmlElement(name = "afaErtek", required = true)
-    private BigDecimal taxTotal;
+    private final BigDecimal taxTotal;
     @XmlElement(name = "bruttoErtek", required = true)
-    private BigDecimal grossTotal;
+    private final BigDecimal grossTotal;
     @XmlElement(name = "megjegyzes", required = true)
-    private String comment;
+    private final String comment;
 
-    public Item setTitle(String title) {
+    public Item(String title, BigDecimal amount, String unit, BigDecimal netUnitPrice, TaxCode taxCode,
+            BigDecimal netTotal, BigDecimal taxTotal, BigDecimal grossTotal, String comment) {
         this.title = title;
-        return this;
-    }
-
-    public Item setAmount(BigDecimal amount) {
         this.amount = amount;
-        return this;
-    }
-
-    public Item setUnit(String unit) {
         this.unit = unit;
-        return this;
-    }
-
-    public Item setNetUnitPrice(BigDecimal netUnitPrice) {
         this.netUnitPrice = netUnitPrice;
-        return this;
-    }
-
-    public Item setTaxCode(TaxCode taxCode) {
         this.taxCode = taxCode;
-        return this;
-    }
-
-    public Item setNetTotal(BigDecimal netTotal) {
         this.netTotal = netTotal;
-        return this;
-    }
-
-    public Item setTaxTotal(BigDecimal taxTotal) {
         this.taxTotal = taxTotal;
-        return this;
-    }
-
-    public Item setGrossTotal(BigDecimal grossTotal) {
         this.grossTotal = grossTotal;
-        return this;
+        this.comment = comment;
     }
 
-    public Item setComment(String comment) {
-        this.comment = comment;
-        return this;
-    }
 }
