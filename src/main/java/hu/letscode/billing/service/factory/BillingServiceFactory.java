@@ -40,7 +40,7 @@ public class BillingServiceFactory {
      * @return {@link BillingService}
      */
     public BillingService createSzamlaAgent(Seller seller, Settings settings) {
-        return new SzamlaAgentBillingService(createSzamlaAgentClient(), seller, settings, createXmlMapper());
+        return new SzamlaAgentBillingService(createSzamlaAgentClient(), createXmlMapper());
     }
 
     /**
@@ -57,7 +57,7 @@ public class BillingServiceFactory {
             Settings settings, Seller seller) {
         return new SzamlaAgentBillingService(
                 new SzamlaAgentClient(httpClientFactory, httpPostFactory, SzamlaAgentClient.SZAMLA_AGENT_API_URL),
-                seller, settings, createXmlMapper());
+                createXmlMapper());
     }
 
     private SzamlaAgentClient createSzamlaAgentClient() {

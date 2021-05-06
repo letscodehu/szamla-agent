@@ -9,7 +9,7 @@ your own service with `createSzamlaAgent` method by passing two previously creat
 
 ```
 BillingServiceFactory serviceFactory = new BillingServiceFactory();
-SzamlaAgentBillingService billingService = serviceFactory.createSzamlaAgent(seller, settings);
+SzamlaAgentBillingService billingService = serviceFactory.createSzamlaAgent();
 ```
 
 The `hu.letscode.billing.domain.Seller` contains information about the selling entity.
@@ -32,9 +32,6 @@ settings.setPassword("password");
 settings.setKeyChainPassword("");
 ```
 
-As you provide these information at the creation of the service, currently you could create a client which only 
-creates bills on behalf of a single entity. 
-
 When you got the service up and running you could invoice bills with the `createBill` method. You only need to create
  `BillingRequest`'s.
 
@@ -42,6 +39,7 @@ When you got the service up and running you could invoice bills with the `create
 BillingRequest billingRequest = new BillingRequest();
 billingRequest.setBuyer(createBuyer());
 billingRequest.setSeller(createSeller());
+billingRequest.setSettings(setSettings());
 billingRequest.setHeader(createHeader());
 billingRequest.setItems(createItemList());
 
@@ -60,12 +58,11 @@ billingRequest.setSettings(createSettings());
 
 billingService.revokeBill(billingRequest);
 ```
-
-This one is different as revoke requires a different settings object.
+Note that the revoke and create buyer/seller/header and settings objects are different.
 
 ### TODO: 
 
-- Remove seller and settings from the client
+- ~~Remove seller and settings from the client~~
 - Refactor requests to immutable ones
 - Create builders for requests
 - Implement client side validation for requests.

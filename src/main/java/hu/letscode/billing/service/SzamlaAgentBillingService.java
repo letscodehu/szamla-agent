@@ -13,43 +13,28 @@ import hu.letscode.billing.domain.*; // NOPMD
 public class SzamlaAgentBillingService implements BillingService {
 
     private final SzamlaAgentClient szamlaAgentClient;
-    private final Seller seller;
-    private final Settings settings;
     private final XmlMapper xmlMapper;
 
     /**
      * Constructor.
      * 
      * @param szamlaAgentClient the client
-     * @param seller            the seller
-     * @param settings          the settings
      * @param xmlMapper         the xml mapper
      */
-    public SzamlaAgentBillingService(final SzamlaAgentClient szamlaAgentClient,
-                                     final Seller seller, final Settings settings, final XmlMapper xmlMapper
-                                     ) {
+    public SzamlaAgentBillingService(final SzamlaAgentClient szamlaAgentClient, final XmlMapper xmlMapper) {
         this.szamlaAgentClient = szamlaAgentClient;
-        this.seller = seller;
-        this.settings = settings;
         this.xmlMapper = xmlMapper;
     }
 
     @Override
     public BillingCreateResponse createBill(final BillingRequest billingRequest) {
         try {
-            final BillingRequest request = transformRequest(billingRequest);
-            final byte[] content = xmlMapper.writeValueAsBytes(request);
+            final byte[] content = xmlMapper.writeValueAsBytes(billingRequest);
             return xmlMapper.readValue(szamlaAgentClient.execute(XmlField.CREATE_BILL, content),
                     BillingCreateResponse.class);
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private BillingRequest transformRequest(final BillingRequest billingRequest) {
-        billingRequest.setSeller(seller);
-        billingRequest.setSettings(settings);
-        return billingRequest;
     }
 
     @Override
@@ -62,7 +47,6 @@ public class SzamlaAgentBillingService implements BillingService {
             throw new RuntimeException(e);
         }
     }
-
 
     @Override
     public boolean markFulfilled(final BillingRequest billingRequest) {
