@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xmlszamla xmlns="http://www.szamlazz.hu/xmlszamla">
+    <beallitasok>
+        <szamlaagentkulcs>ujcrrs4aqcxim9bp32rsv5ek6tpkbedwqtns2k7xz6</szamlaagentkulcs>
+        <eszamla>false</eszamla>
+        <szamlaLetoltes>false</szamlaLetoltes>
+        <valaszVerzio>2</valaszVerzio>
+    </beallitasok>
+    <fejlec>
+        <keltDatum>2020-11-29</keltDatum>
+        <teljesitesDatum>2020-11-29</teljesitesDatum>
+        <fizetesiHataridoDatum>2020-11-29</fizetesiHataridoDatum>
+        <fizmod>Átutalás</fizmod>
+        <penznem>HUF</penznem>
+        <szamlaNyelve>hu</szamlaNyelve>
+        <megjegyzes>test</megjegyzes>
+        <arfolyamBank>OTP</arfolyamBank>
+        <arfolyam>1</arfolyam>
+        <elolegszamla>false</elolegszamla>
+        <vegszamla>false</vegszamla>
+        <helyesbitoszamla>false</helyesbitoszamla>
+        <dijbekero>false</dijbekero>
+        <fizetve>false</fizetve>
+    </fejlec>
+    <elado>
+        <bank>OTP</bank>
+        <bankszamlaszam>555555555-55555555-55555555</bankszamlaszam>
+        <emailTargy>Számla értesítő</emailTargy>
+        <emailSzoveg>Fizesse ki a számlát</emailSzoveg>
+        <alairoNeve>Papp Krisztián</alairoNeve>
+    </elado>
+    <vevo>
+        <nev>Papp Krisztián</nev>
+        <irsz>BN1 6UQ</irsz>
+        <telepules>city</telepules>
+        <cim>address</cim>
+        <email>krisztian@letscode.hu</email>
+        <sendEmail>true</sendEmail>
+        <adoszam>12345678-1-42</adoszam>
+        <alairoNeve>Papp Krisztián</alairoNeve>
+        <telefonszam>555-666</telefonszam>
+        <megjegyzes>test</megjegyzes>
+    </vevo>
+    <tetelek>
+        <tetel>
+            <megnevezes>name</megnevezes>
+            <mennyiseg>1</mennyiseg>
+            <mennyisegiEgyseg>db</mennyisegiEgyseg>
+            <nettoEgysegar>10</nettoEgysegar>
+            <afakulcs>27</afakulcs>
+            <nettoErtek>10</nettoErtek>
+            <afaErtek>2.7</afaErtek>
+            <bruttoErtek>12.7</bruttoErtek>
+            <megjegyzes>test</megjegyzes>
+        </tetel>
+    </tetelek>
+</xmlszamla>
+

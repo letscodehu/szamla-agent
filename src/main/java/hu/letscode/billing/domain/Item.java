@@ -5,6 +5,10 @@ import java.math.BigDecimal;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import hu.letscode.billing.domain.serializer.TaxCodeSerializer;
+
 /**
  * An item on the bills' itemlist.
  */
@@ -20,6 +24,7 @@ public class Item {
     private String unit;
     @XmlElement(name = "nettoEgysegar", required = true)
     private BigDecimal netUnitPrice;
+    @JsonSerialize(using = TaxCodeSerializer.class)
     @XmlElement(name = "afakulcs", required = true)
     private TaxCode taxCode;
     @XmlElement(name = "nettoErtek", required = true)

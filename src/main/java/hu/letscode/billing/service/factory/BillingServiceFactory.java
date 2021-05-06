@@ -11,7 +11,9 @@ import hu.letscode.billing.client.factory.HttpPostFactory;
 import hu.letscode.billing.domain.Language;
 import hu.letscode.billing.domain.Seller;
 import hu.letscode.billing.domain.Settings;
+import hu.letscode.billing.domain.TaxCode;
 import hu.letscode.billing.domain.serializer.LanguageSerializer;
+import hu.letscode.billing.domain.serializer.TaxCodeSerializer;
 import hu.letscode.billing.service.BillingService;
 import hu.letscode.billing.service.SzamlaAgentBillingService;
 
@@ -28,6 +30,7 @@ public class BillingServiceFactory {
     public static XmlMapper createXmlMapper() {
         JacksonXmlModule module = new JacksonXmlModule();
         module.addSerializer(Language.class, new LanguageSerializer());
+        module.addSerializer(TaxCode.class, new TaxCodeSerializer());
         return XmlMapper.builder().disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS).findAndAddModules()
                 .addModule(module).serializationInclusion(JsonInclude.Include.NON_EMPTY).build();
     }

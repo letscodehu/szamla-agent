@@ -71,6 +71,19 @@ public class CreateBillTest {
     }
 
     @Test
+    public void itShouldSerializeDifferentTaxcodes() throws IOException {
+        // GIVEN
+        stubBillingResponse("mock/response/create_bill_failure.xml");
+        BillingRequest createBillingRequest = createBillingRequest();
+        createBillingRequest.setItems(createFullTaxItemList());
+		byte[] content = xmlMapper.writeValueAsBytes(createBillingRequest);
+        // WHEN
+        underTest.execute(XmlField.CREATE_BILL, content);
+        // THEN
+        verifyRequest("expected/request/create_bill_with_different_vat_rate.xml", "action-xmlagentxmlfile");
+    }
+
+    @Test
     public void itShouldSerializeResponseWhenFailure() throws IOException {
         // GIVEN
         stubBillingResponse("mock/response/create_bill_failure.xml");
@@ -147,6 +160,17 @@ public class CreateBillTest {
     private Item createItem() {
         ItemFactory factory = new ItemFactory();
         return factory.create("name", "test", "db", BigDecimal.TEN, BigDecimal.ONE, TaxCode.AAM);
+    }
+
+    private List<Item> createFullTaxItemList() {
+        List<Item> items = new ArrayList<>();
+        items.add(createFullTaxItem());
+        return items;
+    }
+
+    private Item createFullTaxItem() {
+        ItemFactory factory = new ItemFactory();
+        return factory.create("name", "test", "db", BigDecimal.TEN, BigDecimal.ONE, TaxCode.TWENTYSEVEN);
     }
 
     private Buyer createBuyer() {
