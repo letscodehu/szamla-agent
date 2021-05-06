@@ -56,7 +56,7 @@ public class ItemFactory {
         if (taxPercent == null) {
             throw new IllegalArgumentException(String.format("%s not implemented yet!", taxCode.name()));
         }
-        BigDecimal taxTotal = netTotal.multiply(taxPercent).multiply(BigDecimal.valueOf(100));
+        BigDecimal taxTotal = netTotal.multiply(taxPercent).divide(BigDecimal.valueOf(100));
         item.setTaxTotal(taxTotal);
         item.setGrossTotal(netTotal.add(taxTotal));
         return item;

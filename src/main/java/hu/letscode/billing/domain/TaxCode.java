@@ -13,4 +13,8 @@ public enum TaxCode {
     TaxCode(String s) {
         this.value = s;
     }
+
+    public String getValue() {
+        return value;
+    }
 }
